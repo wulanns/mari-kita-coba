@@ -1,0 +1,180 @@
+
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Data Guru</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Guru</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row">
+              <!-- Zero Configuration  Starts-->
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="row mb-3">
+                        <div class="col-10">
+                            <h5>Data Guru</h5><span class="text-secondary">Table Guru</span>
+                        </div>
+                        <div class="col-2 ">
+                            <button class="btn btn-info float-lg-end" data-bs-toggle="modal" data-original-title="Tambah" data-bs-target="#tambahGuru"> Tambah Data</button>
+                        </div>
+                    </div>
+
+                    <?= $this->session->tempdata('message'); ?>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="display" id="basic-1">
+                        <thead>
+                          <tr>
+                            <th>No</th>
+                            <th>NIP</th>
+                            <th>Nama Guru</th>
+                            <th>username</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1;
+                                foreach ($guru as $row) :
+                                    $id = $row['kode_guru'];
+                                    $nm = $row['nama_guru'];
+                                    $nip = $row['nip'];
+                                    $usid = $row['user_id'];
+                                    $username = $row['username'];
+                            ?>
+                          <tr>
+                            <th scope="row" width="10%"><?= $i; ?></th>
+                            <td width="10%"><?= $nip?></td>
+                            <td width="60%"><?= $nm?></td>
+                            <td width="60%"><?= $username?></td>
+                            <td>
+                                <a onclick="editGuru('<?= $id ?>','<?= $nm; ?>','<?= $nip ?>','<?= $usid?>')" class="btn btn-xs btn-warning btn-air-info" title="Edit">
+                                    <i class="icofont icofont-edit"></i>
+                                </a>
+                                <a id="deluser" href="<?= base_url('admin/delete') . '/guru/' . $id .'/kode_guru/masterguru'; ?>" onclick="return confirm('Are you sure?');" class="btn btn-xs btn-danger btn-air-info" title="Delete">
+                                    <i class="icofont icofont-trash"></i>
+                                </a>
+                            </td>
+
+                          </tr>
+                          <?php $i++;
+                                                endforeach; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Zero Configuration  Ends-->
+            
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <!-- <p class="mb-0">Vo-Skill panel @2022</p> -->
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">@2023 Sisapras panel </p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- modal -->
+
+    <div class="modal fade" id="tambahGuru" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Tambah Data Guru</h5>
+              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body m-3">
+                <form action="<?= base_url(); ?>admin/masterguru" method="POST">
+                    <div class="row">
+                        <div class="col">
+                          <div class="mb-3">
+                            <label class="form-label" for="nip">NIP</label>
+                            <input class="form-control" id="nip" name="nip" type="text" >
+                            <?= form_error('nip', '<small class="text-danger pl-3">', '</small>'); ?>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <div class="mb-3">
+                            <label class="form-label" for="nama">Nama</label>
+                            <input class="form-control" id="nama" name="nama" type="text" >
+                            <?= form_error('nama', '<small class="text-danger pl-3">', '</small>'); ?>
+                          </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-secondary" type="submit">Save</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="modal fade" id="detailGuru" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Data Guru</h5>
+              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body m-3">
+                <form action="<?= base_url(); ?>admin/edit/guru" method="POST">
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label class="form-label" for="enip">NIP</label>
+                        <input class="form-control" id="enip" name="enip" type="text" >
+                        <input class="form-control" id="kode" name="kode" type="hidden" >
+                        <?= form_error('enip', '<small class="text-danger pl-3">', '</small>'); ?>
+                      </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label class="form-label" for="enama">Nama</label>
+                        <input class="form-control" id="enama" name="enama" type="text" >
+                        <?= form_error('enama', '<small class="text-danger pl-3">', '</small>'); ?>
+                      </div>
+                    </div>
+                </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-secondary" type="submit">Save</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
